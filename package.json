@@ -1,0 +1,22 @@
+{
+  "name": "node-red-presto-client",
+  "version": "1.0.0",
+  "description": "Presto client",
+  "main": "node-red-presto-client.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Presto"
+  ],
+  "author": "",
+  "license": "ISC",
+  "node-red": {
+    "nodes": {
+      "node-red-presto-client": "node-red-presto-client.js"
+    }
+  },
+  "dependencies": {
+    "presto-client": "^0.6.0"
+  }
+}
