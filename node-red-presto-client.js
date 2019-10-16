@@ -31,6 +31,7 @@ module.exports = function(RED) {
 	}
 	
     function PrestoClient(config) {
+		var resultArray = [];
 		var node = this;
         RED.nodes.createNode(this,config);		
 		SetConfig(config);
@@ -45,13 +46,26 @@ module.exports = function(RED) {
 			prestoClient.execute({
 				query: node.query,
 				
-				data: function(error, data, columns, stats){ 
-					//console.log( {stats: stats} );
-					msg.payload = data;
-					node.send(msg);
+				data: function(error, data, columns, stats){
+					var resultArrayLength = resultArray.length;
+					var dataLength = data.length;
+
+					// Pre allocate size
+					resultArray.length = resultArrayLength + dataLength;
+
+					node.log('data received');
+
+					// Instead of using concat
+					for(var i = 0; i < dataLength; i+=1){
+						resultArray[resultArrayLength + i] = data[i];
+					}
 				},
 				success: function(error, stats){
-					//console.log(stats)
+					//console.log({success:"Success", stats: stats});
+					node.log('success');
+					
+					msg.payload = resultArray;
+					send(msg);
 				},
 				error:   function(error){
 					node.error(error)
@@ -64,8 +78,6 @@ module.exports = function(RED) {
 			if (done) {
 				done();
 			}
-			
-			node.log('input event ended');
 		});
         
     }
