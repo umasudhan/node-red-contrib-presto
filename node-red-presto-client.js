@@ -65,9 +65,11 @@ module.exports = function(RED) {
 					//node.log('success');
 					
 					msg.payload = resultArray;
-					send(msg);
+					node.send([msg]);
 				},
 				error:   function(error){
+					msg.error = error;
+					node.send([msg]);
 					node.error(error)
 				}
 			});
