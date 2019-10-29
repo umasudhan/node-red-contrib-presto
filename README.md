@@ -1,2 +1,2 @@
 # node-red-contrib-presto
-A node for Presto (distributed SQL query engine).
+A client node to retrieve data from Presto (distributed SQL query engine).

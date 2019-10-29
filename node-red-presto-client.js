@@ -1,5 +1,5 @@
 module.exports = function(RED) {
-	var presto = require('presto-client');
+	var presto = require('./client');
 	var prestoClient;
 	var query;
 	
@@ -39,7 +39,7 @@ module.exports = function(RED) {
 		this.query = config.query;
 		
 		node.on('input', function(msg, send, done) {
-			node.log('input event started');
+			//node.log('input event started');
 		
 			prestoClient = new presto.Client(options);
 			
@@ -53,7 +53,7 @@ module.exports = function(RED) {
 					// Pre allocate size
 					resultArray.length = resultArrayLength + dataLength;
 
-					node.log('data received');
+					//node.log('data received');
 
 					// Instead of using concat
 					for(var i = 0; i < dataLength; i+=1){
@@ -62,7 +62,7 @@ module.exports = function(RED) {
 				},
 				success: function(error, stats){
 					//console.log({success:"Success", stats: stats});
-					node.log('success');
+					//node.log('success');
 					
 					msg.payload = resultArray;
 					send(msg);
